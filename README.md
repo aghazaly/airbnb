@@ -3,7 +3,7 @@ This package instantiate a data object which includes sample data from airbnb
 
 # To install:
 
-CD to airbnb folder then run the following command
+After cloning this repo, CD to airbnb folder then run the following command
 
 pip install .
 
