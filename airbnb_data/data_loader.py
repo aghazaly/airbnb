@@ -7,9 +7,11 @@ import datetime
 import pandas as pd
 
 class Data:
-    def __init__(self, target, features=[]):
+    """
+    Target is a target column name
+    """
+    def __init__(self, target):
         self.target = target
-        self.features = features
     
     def load_data(self):
         data_dict = {}
@@ -21,10 +23,19 @@ class Data:
             data_dict[f"{folder_name}_{file_name.split('.')[0]}"] = pd.read_csv(path)
         return data_dict
     
-    # def prepare_data(self, df, dropna=bool):
-    #     """
-    #     Takes a dataframe and outputs X and y 
-    #     """
-    #     cleaned_df = df.dropna(subset=[self.target]+self.features)
-        
-        
+    def prepare_data(self, df, na, features=[]):
+        """
+        Takes a dataframe and returns cleaned dataframe
+        """
+        cleaned_df = df.dropna(subset=[self.target])
+        if na=='drop_na':
+            cleaned_df = cleaned_df.dropna(subset=features)
+        elif na=='mean':
+            cleaned_df[features] = cleaned_df[features].apply(lambda x: x.fillna(x.mean()))
+        else:
+            a = cleaned_df.isna().mean()
+            na_cols = a[a>0].index.tolist()
+            
+            print(f"these columns still have NaNs {na_cols}")
+            
+        return cleaned_df      
