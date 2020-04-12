@@ -1,4 +1,4 @@
-# airbnb
+# Airbnb
 This package instantiate a data object which includes sample data from airbnb
 
 # To install:
